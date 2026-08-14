@@ -47,6 +47,21 @@ jobs:
 
       - name: Verify Google Cloud authentication
         run: |
-          gcloud auth list
           gcloud config set project devops-internship-project
-          gcloud compute instances list
+          gcloud compute instances describe devops-web-server \
+            --zone=us-central1-a
+
+      - name: Deploy application to GCP VM
+        run: |
+          gcloud compute ssh devops-web-server \
+            --zone=us-central1-a \
+            --command="
+              cd /home/lumamahesh128/app &&
+              sudo docker stop devops-webapp-container || true &&
+              sudo docker rm devops-webapp-container || true &&
+              sudo docker build -t devops-webapp:latest . &&
+              sudo docker run -d \
+                --name devops-webapp-container \
+                -p 3000:3000 \
+                devops-webapp:latest
+            "
