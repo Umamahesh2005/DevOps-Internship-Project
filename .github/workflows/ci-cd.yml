@@ -51,15 +51,18 @@ jobs:
           gcloud compute instances describe devops-web-server \
             --zone=us-central1-a
 
-      - name: Deploy application to GCP VM
+      - name: Prepare deployment directory
         run: |
           gcloud compute ssh devops-web-server \
             --zone=us-central1-a \
             --command="
-              rm -rf /home/lumamahesh128/app-deploy &&
-              mkdir -p /home/lumamahesh128/app-deploy
+              sudo rm -rf /home/lumamahesh128/app-deploy &&
+              sudo mkdir -p /home/lumamahesh128/app-deploy &&
+              sudo chown -R lumamahesh128:lumamahesh128 /home/lumamahesh128/app-deploy
             "
 
+      - name: Copy application files to GCP VM
+        run: |
           gcloud compute scp --recurse ./app \
             devops-web-server:/home/lumamahesh128/app-deploy/app \
             --zone=us-central1-a
@@ -72,6 +75,8 @@ jobs:
             devops-web-server:/home/lumamahesh128/app-deploy/.dockerignore \
             --zone=us-central1-a
 
+      - name: Deploy application to GCP VM
+        run: |
           gcloud compute ssh devops-web-server \
             --zone=us-central1-a \
             --command="
