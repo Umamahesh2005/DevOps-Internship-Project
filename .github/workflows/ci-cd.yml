@@ -17,34 +17,89 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # ==============================
+      # 1. CHECKOUT SOURCE CODE
+      # ==============================
       - name: Checkout source code
         uses: actions/checkout@v4
 
+
+      # ==============================
+      # 2. SETUP NODE.JS
+      # ==============================
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
+
+      # ==============================
+      # 3. INSTALL DEPENDENCIES
+      # ==============================
       - name: Install dependencies
         working-directory: ./app
         run: npm install
 
+
+      # ==============================
+      # 4. RUN APPLICATION TEST
+      # ==============================
       - name: Run application test
         working-directory: ./app
         run: npm test --if-present
 
-      - name: Build Docker image
-        run: docker build -t devops-webapp:ci .
 
+      # ==============================
+      # 5. BUILD DOCKER IMAGE
+      # ==============================
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/devops-webapp:${{ github.sha }} \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/devops-webapp:latest \
+            .
+
+
+      # ==============================
+      # 6. LOGIN TO DOCKER HUB
+      # ==============================
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+
+      # ==============================
+      # 7. PUSH DOCKER IMAGE
+      # ==============================
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops-webapp:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops-webapp:latest
+
+
+      # ==============================
+      # 8. AUTHENTICATE TO GOOGLE CLOUD
+      # ==============================
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ vars.WIF_PROVIDER }}
           service_account: ${{ vars.WIF_SERVICE_ACCOUNT }}
 
+
+      # ==============================
+      # 9. SETUP GOOGLE CLOUD CLI
+      # ==============================
       - name: Setup Google Cloud CLI
         uses: google-github-actions/setup-gcloud@v2
 
+
+      # ==============================
+      # 10. VERIFY GOOGLE CLOUD
+      # ==============================
       - name: Verify Google Cloud authentication
         run: |
           gcloud config set project devops-internship-project
@@ -52,49 +107,36 @@ jobs:
           gcloud compute instances describe devops-web-server \
             --zone=us-central1-a
 
-      - name: Prepare deployment directory on GCP VM
-        run: |
-          gcloud compute ssh devops-web-server \
-            --zone=us-central1-a \
-            --command="
-              sudo rm -rf /tmp/devops-deploy &&
-              sudo mkdir -p /tmp/devops-deploy &&
-              sudo chown -R \$USER:\$USER /tmp/devops-deploy
-            "
 
-      - name: Copy application to GCP VM
-        run: |
-          gcloud compute scp --recurse ./app \
-            devops-web-server:/tmp/devops-deploy/ \
-            --zone=us-central1-a
-
-          gcloud compute scp Dockerfile \
-            devops-web-server:/tmp/devops-deploy/Dockerfile \
-            --zone=us-central1-a
-
-          gcloud compute scp .dockerignore \
-            devops-web-server:/tmp/devops-deploy/.dockerignore \
-            --zone=us-central1-a
-
+      # ==============================
+      # 11. DEPLOY FROM DOCKER HUB
+      # ==============================
       - name: Deploy application to GCP VM
         run: |
           gcloud compute ssh devops-web-server \
             --zone=us-central1-a \
             --command="
-              cd /tmp/devops-deploy &&
-              
+              echo '=== Pulling Docker image from Docker Hub ===' &&
+              sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/devops-webapp:latest &&
+
+              echo '=== Stopping old container ===' &&
               sudo docker stop devops-webapp-container || true &&
+
+              echo '=== Removing old container ===' &&
               sudo docker rm devops-webapp-container || true &&
-              
-              sudo docker build --no-cache \
-                -t devops-webapp:latest . &&
-              
+
+              echo '=== Starting new container ===' &&
               sudo docker run -d \
                 --name devops-webapp-container \
                 -p 3000:3000 \
-                devops-webapp:latest
+                --restart unless-stopped \
+                ${{ secrets.DOCKERHUB_USERNAME }}/devops-webapp:latest
             "
 
+
+      # ==============================
+      # 12. VERIFY DEPLOYMENT
+      # ==============================
       - name: Verify deployed application
         run: |
           gcloud compute ssh devops-web-server \
@@ -102,7 +144,7 @@ jobs:
             --command="
               echo '=== Docker Container ===' &&
               sudo docker ps --filter name=devops-webapp-container &&
-              
+
               echo '=== Container Logs ===' &&
               sudo docker logs --tail 30 devops-webapp-container
             "
