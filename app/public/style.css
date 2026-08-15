@@ -6,465 +6,460 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #f5f7fb;
+    background: #f4f7fb;
     color: #172033;
     line-height: 1.6;
 }
 
-/* Header */
+a {
+    text-decoration: none;
+}
 
-.header {
-    height: 72px;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e8ef;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 8%;
+
+/* ==============================
+   NAVIGATION
+============================== */
+
+.navbar {
+    background: #101827;
+    color: white;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 18px 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 22px;
-    font-weight: 800;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.logo-icon {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #2563eb;
-    color: white;
-    border-radius: 10px;
-}
-
-.accent {
-    color: #2563eb;
+.logo span {
+    color: #4f7cff;
+    margin-left: 5px;
 }
 
 nav {
     display: flex;
-    gap: 32px;
+    gap: 30px;
 }
 
 nav a {
-    color: #596579;
-    text-decoration: none;
+    color: #dce3f0;
     font-weight: 600;
-    transition: 0.2s;
+    transition: 0.3s;
 }
 
 nav a:hover,
 nav a.active {
-    color: #2563eb;
+    color: #5c85ff;
 }
 
 
-/* Hero */
+/* ==============================
+   HERO
+============================== */
 
 .hero {
-    min-height: 600px;
-    padding: 90px 8%;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 70px;
-    align-items: center;
-    background:
-        radial-gradient(circle at 10% 20%, #dbeafe 0, transparent 30%),
-        radial-gradient(circle at 90% 80%, #e0e7ff 0, transparent 30%),
-        #f8fafc;
+    background: linear-gradient(135deg, #111827, #1d3768);
+    color: white;
+    padding: 80px 20px;
+}
+
+.hero-content {
+    max-width: 1200px;
+    margin: auto;
 }
 
 .status-badge {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    background: #ecfdf3;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
+    gap: 8px;
+
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
     padding: 8px 15px;
     border-radius: 30px;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    margin-bottom: 22px;
+
+    font-size: 14px;
+    margin-bottom: 20px;
 }
 
 .status-dot {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
+    background: #32d583;
     border-radius: 50%;
-    background: #22c55e;
 }
 
 .hero h1 {
-    font-size: 56px;
-    line-height: 1.08;
-    letter-spacing: -2px;
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.1;
     margin-bottom: 25px;
 }
 
 .hero h1 span {
-    color: #2563eb;
+    color: #5d8cff;
 }
 
-.hero-content>p {
-    max-width: 650px;
+.hero p {
+    max-width: 750px;
     font-size: 19px;
-    color: #64748b;
-    margin-bottom: 35px;
+    color: #d5dced;
+    margin-bottom: 30px;
 }
 
 .hero-buttons {
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
-.primary-btn,
-.secondary-btn {
-    padding: 13px 23px;
-    border-radius: 9px;
-    text-decoration: none;
-    font-weight: 700;
+.btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
-.primary-btn {
-    background: #2563eb;
+.btn.primary {
+    background: #4f7cff;
     color: white;
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
 }
 
-.secondary-btn {
-    background: white;
-    color: #334155;
-    border: 1px solid #dbe1ea;
+.btn.primary:hover {
+    background: #3b65db;
+}
+
+.btn.secondary {
+    border: 1px solid #8095c9;
+    color: white;
+}
+
+.btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 
-/* Deployment Card */
+/* ==============================
+   MAIN CONTAINER
+============================== */
 
-.hero-card {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 60px 0;
 }
 
-.card-header {
+.section {
+    margin-bottom: 55px;
+}
+
+.section-heading {
     display: flex;
-    justify-content: space-between;
-    color: #64748b;
-    font-size: 14px;
-    font-weight: 700;
+    gap: 20px;
+    align-items: flex-start;
 }
 
-.live {
-    color: #16a34a;
+.icon {
+    font-size: 35px;
 }
 
-.deployment-icon {
-    width: 80px;
-    height: 80px;
-    background: #eff6ff;
-    border-radius: 18px;
+.section-heading h2,
+.section-title h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.section-heading p {
+    color: #5d687a;
+    font-size: 17px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+
+/* ==============================
+   TECHNOLOGY CARDS
+============================== */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e0e6ef;
+    border-radius: 14px;
+    padding: 25px;
+
+    box-shadow: 0 5px 18px rgba(22, 35, 60, 0.06);
+
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(22, 35, 60, 0.12);
+}
+
+.card-icon {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #667085;
+}
+
+
+/* ==============================
+   PIPELINE
+============================== */
+
+.pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.pipeline-step {
+    flex: 1;
+    background: white;
+    border: 1px solid #e0e6ef;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+
+    box-shadow: 0 5px 15px rgba(22, 35, 60, 0.05);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+
+    margin: 0 auto 12px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 38px;
-    margin: 35px 0 20px;
+
+    border-radius: 50%;
+
+    background: #4f7cff;
+    color: white;
+
+    font-weight: bold;
 }
 
-.hero-card h2 {
+.pipeline-step h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.pipeline-step p {
+    font-size: 14px;
+    color: #667085;
+}
+
+.pipeline-arrow {
+    display: flex;
+    align-items: center;
     font-size: 25px;
-    margin-bottom: 10px;
+    color: #4f7cff;
 }
 
-.hero-card>p {
-    color: #64748b;
+
+/* ==============================
+   DEPLOYMENT STATUS
+============================== */
+
+.deployment-card {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+
+    background: linear-gradient(135deg, #ffffff, #f3f7ff);
+
+    border: 1px solid #d8e2f5;
+    border-radius: 16px;
+
+    padding: 30px;
+
+    box-shadow: 0 8px 25px rgba(22, 35, 60, 0.07);
 }
 
-.status-info {
+.deployment-icon {
+    min-width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dff8e9;
+    color: #159447;
+
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.deployment-content h2 {
+    margin-bottom: 8px;
+}
+
+.deployment-content>p {
+    color: #667085;
+    margin-bottom: 25px;
+}
+
+.deployment-details {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 28px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
 }
 
-.status-info div {
-    background: #f8fafc;
-    padding: 13px;
+.deployment-details div {
+    background: white;
+    border: 1px solid #e2e8f0;
     border-radius: 10px;
+    padding: 15px;
 }
 
-.status-info small {
+.deployment-details span {
     display: block;
-    color: #94a3b8;
-    font-size: 11px;
+    font-size: 12px;
+    color: #7b8495;
+    margin-bottom: 4px;
 }
 
-.status-info strong {
+.deployment-details strong {
+    font-size: 14px;
+}
+
+.live {
+    color: #159447;
+}
+
+
+/* ==============================
+   FOOTER
+============================== */
+
+footer {
+    background: #101827;
+    color: white;
+    margin-top: 30px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: auto;
+    padding: 45px 25px;
+    text-align: center;
+}
+
+.footer-content h3 {
+    margin-bottom: 5px;
+}
+
+.footer-content p {
+    color: #aeb9cc;
+}
+
+.footer-small {
+    margin-top: 15px;
     font-size: 13px;
 }
 
 
-/* Sections */
-
-.section {
-    padding: 90px 8%;
-}
-
-.section-title {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 55px;
-}
-
-.section-title>span {
-    color: #2563eb;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
-.section-title h2 {
-    font-size: 36px;
-    margin: 10px 0;
-}
-
-.section-title p {
-    color: #64748b;
-}
-
-
-/* Pipeline */
-
-.pipeline {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-.pipeline-step {
-    text-align: center;
-    min-width: 115px;
-}
-
-.step-icon {
-    width: 55px;
-    height: 55px;
-    margin: auto;
-    border-radius: 50%;
-    background: #2563eb;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-}
-
-.pipeline-step h3 {
-    font-size: 14px;
-    margin-top: 12px;
-}
-
-.pipeline-step p {
-    font-size: 11px;
-    color: #94a3b8;
-}
-
-.pipeline-line {
-    height: 2px;
-    width: 45px;
-    background: #bfdbfe;
-}
-
-
-/* Technology Cards */
-
-.technologies {
-    background: #ffffff;
-}
-
-.tech-grid {
-    max-width: 1200px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.tech-card {
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
-    padding: 28px;
-    border-radius: 15px;
-    transition: 0.25s;
-}
-
-.tech-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-}
-
-.tech-icon {
-    width: 45px;
-    height: 45px;
-    border-radius: 10px;
-    background: #dbeafe;
-    color: #2563eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    margin-bottom: 18px;
-}
-
-.tech-card h3 {
-    margin-bottom: 7px;
-}
-
-.tech-card p {
-    color: #64748b;
-    font-size: 14px;
-}
-
-
-/* Features */
-
-.feature-grid {
-    max-width: 1000px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-.feature {
-    display: flex;
-    gap: 18px;
-    background: white;
-    border: 1px solid #e5e7eb;
-    padding: 25px;
-    border-radius: 14px;
-}
-
-.feature>span {
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: #dcfce7;
-    color: #16a34a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.feature h3 {
-    margin-bottom: 5px;
-}
-
-.feature p {
-    color: #64748b;
-    font-size: 14px;
-}
-
-
-/* Footer */
-
-footer {
-    background: #111827;
-    color: white;
-    padding: 45px 8%;
-    text-align: center;
-}
-
-.footer-logo {
-    font-size: 22px;
-    font-weight: 800;
-}
-
-.footer-logo span {
-    color: #60a5fa;
-}
-
-footer p {
-    color: #9ca3af;
-    margin-top: 8px;
-}
-
-footer .copyright {
-    font-size: 12px;
-    margin-top: 20px;
-}
-
-
-/* Responsive */
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
 
 @media (max-width: 900px) {
 
-    .hero {
-        grid-template-columns: 1fr;
-        padding: 60px 6%;
-    }
-
-    .hero h1 {
-        font-size: 42px;
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .pipeline {
-        flex-wrap: wrap;
+        flex-direction: column;
     }
 
-    .pipeline-line {
-        display: none;
+    .pipeline-arrow {
+        justify-content: center;
+        transform: rotate(90deg);
     }
 
-    .tech-grid {
+    .deployment-details {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
+
 @media (max-width: 600px) {
 
-    .header {
-        padding: 0 5%;
+    .nav-container {
+        flex-direction: column;
+        gap: 15px;
     }
 
     nav {
-        gap: 12px;
+        gap: 20px;
     }
 
     .hero {
-        padding: 50px 5%;
+        padding: 55px 20px;
     }
 
     .hero h1 {
-        font-size: 36px;
+        font-size: 40px;
     }
 
-    .tech-grid,
-    .feature-grid {
+    .hero p {
+        font-size: 16px;
+    }
+
+    .cards {
         grid-template-columns: 1fr;
     }
 
-    .status-info {
-        grid-template-columns: 1fr;
+    .section-heading {
+        flex-direction: column;
     }
 
-    .section {
-        padding: 60px 5%;
+    .deployment-card {
+        flex-direction: column;
+    }
+
+    .deployment-details {
+        grid-template-columns: 1fr;
     }
 }

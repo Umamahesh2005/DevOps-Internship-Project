@@ -1,70 +1,227 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevOps CI/CD Project</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
 
-    <h1>DevOps CI/CD Deployment Successful!</h1>
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">DevOps<span>CI/CD</span></div>
 
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/about">About</a> |
-        <a href="/contact">Contact</a>
-    </nav>
+            <nav>
+                <a href="/" class="active">Home</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+            </nav>
+        </div>
+    </header>
 
-    <hr>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
 
-    <h2>Welcome to the DevOps Internship Project</h2>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Deployment Status: LIVE
+            </div>
 
-    <p>
-        This application demonstrates an automated DevOps deployment pipeline
-        using modern cloud and container technologies.
-    </p>
+            <h1>DevOps CI/CD<br><span>Deployment Successful!</span></h1>
 
-    <h3>🚀 CI/CD Pipeline</h3>
+            <p>
+                An automated web application deployment pipeline built using
+                modern DevOps, containerization, cloud infrastructure,
+                and continuous delivery technologies.
+            </p>
 
-    <p>
-        Every code change pushed to the GitHub repository automatically
-        triggers the CI/CD pipeline.
-    </p>
+            <div class="hero-buttons">
+                <a href="/about" class="btn primary">Explore Project</a>
+                <a href="/contact" class="btn secondary">Contact</a>
+            </div>
 
-    <ul>
-        <li>GitHub for source code management</li>
-        <li>GitHub Actions for CI/CD automation</li>
-        <li>Docker for application containerization</li>
-        <li>Docker Hub for container image storage</li>
-        <li>Google Cloud Platform for deployment</li>
-        <li>Terraform for infrastructure management</li>
-    </ul>
+        </div>
+    </section>
 
-    <h3>⚙️ Automated Deployment</h3>
+    <!-- Main Content -->
+    <main class="container">
 
-    <p>
-        The application is automatically built, tested, packaged into a Docker
-        image, pushed to Docker Hub, and deployed to the Google Cloud server.
-    </p>
+        <!-- Welcome -->
+        <section class="section">
+            <div class="section-heading">
+                <span class="icon">🚀</span>
+                <div>
+                    <h2>Welcome to the DevOps Internship Project</h2>
+                    <p>
+                        This project demonstrates a complete automated software
+                        delivery workflow from source code to cloud deployment.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-    <h3>✅ Application Status</h3>
+        <!-- Technology Cards -->
+        <section class="section">
 
-    <p>
-        The application is currently running successfully inside a Docker
-        container on the Google Cloud VM.
-    </p>
+            <div class="section-title">
+                <span>🛠️</span>
+                <h2>Technology Stack</h2>
+            </div>
 
-    <p>
-        <strong>Deployment Status: LIVE</strong>
-    </p>
+            <div class="cards">
 
-    <hr>
+                <div class="card">
+                    <div class="card-icon">🐙</div>
+                    <h3>GitHub</h3>
+                    <p>Source code management and version control.</p>
+                </div>
 
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>GitHub Actions</h3>
+                    <p>Automated CI/CD pipeline execution.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🐳</div>
+                    <h3>Docker</h3>
+                    <p>Application containerization and packaging.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📦</div>
+                    <h3>Docker Hub</h3>
+                    <p>Container image storage and distribution.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">☁️</div>
+                    <h3>Google Cloud</h3>
+                    <p>Cloud VM infrastructure for deployment.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏗️</div>
+                    <h3>Terraform</h3>
+                    <p>Infrastructure as Code for cloud resources.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Pipeline -->
+        <section class="section">
+
+            <div class="section-title">
+                <span>🔄</span>
+                <h2>CI/CD Pipeline</h2>
+            </div>
+
+            <div class="pipeline">
+
+                <div class="pipeline-step">
+                    <div class="step-number">1</div>
+                    <h3>Code Push</h3>
+                    <p>Developer pushes code to GitHub.</p>
+                </div>
+
+                <div class="pipeline-arrow">→</div>
+
+                <div class="pipeline-step">
+                    <div class="step-number">2</div>
+                    <h3>Build & Test</h3>
+                    <p>GitHub Actions installs dependencies and tests the app.</p>
+                </div>
+
+                <div class="pipeline-arrow">→</div>
+
+                <div class="pipeline-step">
+                    <div class="step-number">3</div>
+                    <h3>Docker Build</h3>
+                    <p>Application is packaged into a Docker image.</p>
+                </div>
+
+                <div class="pipeline-arrow">→</div>
+
+                <div class="pipeline-step">
+                    <div class="step-number">4</div>
+                    <h3>Docker Hub</h3>
+                    <p>Docker image is pushed to Docker Hub.</p>
+                </div>
+
+                <div class="pipeline-arrow">→</div>
+
+                <div class="pipeline-step">
+                    <div class="step-number">5</div>
+                    <h3>Cloud Deploy</h3>
+                    <p>Latest image is deployed to the Google Cloud VM.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Deployment Status -->
+        <section class="deployment-card">
+
+            <div class="deployment-icon">✓</div>
+
+            <div class="deployment-content">
+                <h2>Application Running Successfully</h2>
+
+                <p>
+                    The application is currently running inside a Docker
+                    container on the Google Cloud VM.
+                </p>
+
+                <div class="deployment-details">
+
+                    <div>
+                        <span>Environment</span>
+                        <strong>Google Cloud VM</strong>
+                    </div>
+
+                    <div>
+                        <span>Container</span>
+                        <strong>Docker</strong>
+                    </div>
+
+                    <div>
+                        <span>Pipeline</span>
+                        <strong>GitHub Actions</strong>
+                    </div>
+
+                    <div>
+                        <span>Status</span>
+                        <strong class="live">● LIVE</strong>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
     <footer>
-        <p>DevOps Internship Project | Automated CI/CD Deployment Pipeline</p>
+        <div class="footer-content">
+            <h3>DevOps Internship Project</h3>
+            <p>Automated CI/CD Deployment Pipeline</p>
+            <p class="footer-small">
+                GitHub • Docker • Docker Hub • Terraform • Google Cloud
+            </p>
+        </div>
     </footer>
 
 </body>
 
 </html>
+```
