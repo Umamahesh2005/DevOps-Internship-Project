@@ -148,3 +148,16 @@ jobs:
               echo '=== Container Logs ===' &&
               sudo docker logs --tail 30 devops-webapp-container
             "
+      # ==============================
+      # 13. APPLICATION HEALTH CHECK
+      # ==============================
+      - name: Application health check
+        run: |
+          gcloud compute ssh devops-web-server \
+            --zone=us-central1-a \
+            --command="
+              echo '=== Application Health Check ===' &&
+              curl --fail http://localhost:3000/health &&
+              echo '' &&
+              echo '=== Application is healthy ==='
+            "
