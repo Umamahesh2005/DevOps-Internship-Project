@@ -48,6 +48,7 @@ jobs:
       - name: Verify Google Cloud authentication
         run: |
           gcloud config set project devops-internship-project
+
           gcloud compute instances describe devops-web-server \
             --zone=us-central1-a
 
@@ -63,8 +64,8 @@ jobs:
 
       - name: Copy application files to GCP VM
         run: |
-          gcloud compute scp --recurse ./app \
-            devops-web-server:/home/lumamahesh128/app-deploy/app \
+          gcloud compute scp --recurse ./app/. \
+            devops-web-server:/home/lumamahesh128/app-deploy \
             --zone=us-central1-a
 
           gcloud compute scp Dockerfile \
@@ -81,10 +82,20 @@ jobs:
             --zone=us-central1-a \
             --command="
               cd /home/lumamahesh128/app-deploy &&
+              
+              echo 'Stopping old container...' &&
               sudo docker stop devops-webapp-container || true &&
+              
+              echo 'Removing old container...' &&
               sudo docker rm devops-webapp-container || true &&
+              
+              echo 'Removing old image...' &&
               sudo docker rmi devops-webapp:latest || true &&
+              
+              echo 'Building new Docker image...' &&
               sudo docker build --no-cache -t devops-webapp:latest . &&
+              
+              echo 'Starting new container...' &&
               sudo docker run -d \
                 --name devops-webapp-container \
                 -p 3000:3000 \
@@ -95,4 +106,9 @@ jobs:
         run: |
           gcloud compute ssh devops-web-server \
             --zone=us-central1-a \
-            --command="curl -I http://localhost:3000"
+            --command="
+              echo 'Docker container status:' &&
+              sudo docker ps &&
+              echo 'Application response:' &&
+              curl -I http://localhost:3000
+            "
