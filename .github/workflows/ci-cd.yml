@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install dependencies
         working-directory: ./app
@@ -55,36 +55,48 @@ jobs:
         run: |
           gcloud compute ssh devops-web-server \
             --zone=us-central1-a \
-            --command="
-              sudo mkdir -p /home/lumamahesh128/app-deploy/app &&
-              sudo chown -R lumamahesh128:lumamahesh128 /home/lumamahesh128/app-deploy
-            "
+            --command="sudo mkdir -p /home/lumamahesh128/app-deploy && sudo chown -R lumamahesh128:lumamahesh128 /home/lumamahesh128/app-deploy"
+
+      - name: Prepare temporary directory on GCP VM
+        run: |
+          gcloud compute ssh devops-web-server \
+            --zone=us-central1-a \
+            --command="rm -rf /tmp/devops-app && mkdir -p /tmp/devops-app"
 
       - name: Copy application files to GCP VM
         run: |
-          gcloud compute scp --recurse ./app/* \
-            devops-web-server:/home/lumamahesh128/app-deploy/app/ \
+          gcloud compute scp --recurse ./app \
+            devops-web-server:/tmp/devops-app/ \
             --zone=us-central1-a
 
           gcloud compute scp Dockerfile \
-            devops-web-server:/home/lumamahesh128/app-deploy/Dockerfile \
+            devops-web-server:/tmp/devops-app/Dockerfile \
             --zone=us-central1-a
 
           gcloud compute scp .dockerignore \
-            devops-web-server:/home/lumamahesh128/app-deploy/.dockerignore \
+            devops-web-server:/tmp/devops-app/.dockerignore \
             --zone=us-central1-a
+
+      - name: Move files to deployment directory
+        run: |
+          gcloud compute ssh devops-web-server \
+            --zone=us-central1-a \
+            --command="rm -rf /home/lumamahesh128/app-deploy/app && mkdir -p /home/lumamahesh128/app-deploy/app && cp -r /tmp/devops-app/app/. /home/lumamahesh128/app-deploy/app/ && cp /tmp/devops-app/Dockerfile /home/lumamahesh128/app-deploy/Dockerfile && cp /tmp/devops-app/.dockerignore /home/lumamahesh128/app-deploy/.dockerignore && chown -R lumamahesh128:lumamahesh128 /home/lumamahesh128/app-deploy && rm -rf /tmp/devops-app"
+
+      - name: Verify copied files
+        run: |
+          gcloud compute ssh devops-web-server \
+            --zone=us-central1-a \
+            --command="echo '=== Deployment directory ===' && ls -la /home/lumamahesh128/app-deploy && echo '=== Application directory ===' && ls -la /home/lumamahesh128/app-deploy/app && echo '=== Required files ===' && test -f /home/lumamahesh128/app-deploy/app/package.json && test -f /home/lumamahesh128/app-deploy/Dockerfile && test -f /home/lumamahesh128/app-deploy/.dockerignore && echo 'All required files are present.'"
 
       - name: Deploy application to GCP VM
         run: |
           gcloud compute ssh devops-web-server \
             --zone=us-central1-a \
-            --command="
-              cd /home/lumamahesh128/app-deploy &&
-              sudo docker stop devops-webapp-container || true &&
-              sudo docker rm devops-webapp-container || true &&
-              sudo docker build -t devops-webapp:latest . &&
-              sudo docker run -d \
-                --name devops-webapp-container \
-                -p 3000:3000 \
-                devops-webapp:latest
-            "
+            --command="cd /home/lumamahesh128/app-deploy && sudo docker stop devops-webapp-container || true && sudo docker rm devops-webapp-container || true && sudo docker build -t devops-webapp:latest . && sudo docker run -d --name devops-webapp-container -p 3000:3000 devops-webapp:latest"
+
+      - name: Verify deployed application
+        run: |
+          gcloud compute ssh devops-web-server \
+            --zone=us-central1-a \
+            --command="sudo docker ps --filter name=devops-webapp-container && sudo docker logs --tail 20 devops-webapp-container"
