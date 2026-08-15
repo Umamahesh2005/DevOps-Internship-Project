@@ -1,24 +1,276 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>About</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps CI/CD Pipeline</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
 
-    <h1>About</h1>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">⚙</span>
+            <span>DevOps<span class="accent">Hub</span></span>
+        </div>
 
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/about">About</a> |
-        <a href="/contact">Contact</a>
-    </nav>
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
 
-    <hr>
 
-    <p>This project demonstrates Docker, Terraform, AWS and CI/CD.</p>
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                LIVE DEPLOYMENT
+            </div>
+
+            <h1>
+                Automated <span>CI/CD</span><br>
+                Deployment Pipeline
+            </h1>
+
+            <p>
+                A fully automated DevOps deployment system that builds,
+                tests, containerizes, and deploys applications to the cloud.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="/about" class="primary-btn">Explore Project →</a>
+                <a href="/contact" class="secondary-btn">Contact</a>
+            </div>
+
+        </div>
+
+        <div class="hero-card">
+
+            <div class="card-header">
+                <span>Deployment Status</span>
+                <span class="live">● LIVE</span>
+            </div>
+
+            <div class="deployment-icon">
+                🚀
+            </div>
+
+            <h2>Deployment Successful</h2>
+
+            <p>
+                Application is running successfully
+                inside a Docker container on Google Cloud.
+            </p>
+
+            <div class="status-info">
+                <div>
+                    <small>Environment</small>
+                    <strong>Production</strong>
+                </div>
+
+                <div>
+                    <small>Container</small>
+                    <strong>Docker</strong>
+                </div>
+
+                <div>
+                    <small>Platform</small>
+                    <strong>GCP VM</strong>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Pipeline -->
+    <section class="section">
+
+        <div class="section-title">
+            <span>CI/CD PIPELINE</span>
+            <h2>From Code to Production</h2>
+            <p>
+                Every code push automatically passes through the following
+                deployment stages.
+            </p>
+        </div>
+
+        <div class="pipeline">
+
+            <div class="pipeline-step">
+                <div class="step-icon">01</div>
+                <h3>GitHub</h3>
+                <p>Source Code</p>
+            </div>
+
+            <div class="pipeline-line"></div>
+
+            <div class="pipeline-step">
+                <div class="step-icon">02</div>
+                <h3>Build</h3>
+                <p>Application Build</p>
+            </div>
+
+            <div class="pipeline-line"></div>
+
+            <div class="pipeline-step">
+                <div class="step-icon">03</div>
+                <h3>Test</h3>
+                <p>Automated Testing</p>
+            </div>
+
+            <div class="pipeline-line"></div>
+
+            <div class="pipeline-step">
+                <div class="step-icon">04</div>
+                <h3>Docker</h3>
+                <p>Container Image</p>
+            </div>
+
+            <div class="pipeline-line"></div>
+
+            <div class="pipeline-step">
+                <div class="step-icon">05</div>
+                <h3>Docker Hub</h3>
+                <p>Image Registry</p>
+            </div>
+
+            <div class="pipeline-line"></div>
+
+            <div class="pipeline-step">
+                <div class="step-icon">06</div>
+                <h3>GCP</h3>
+                <p>Production</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Technologies -->
+    <section class="section technologies">
+
+        <div class="section-title">
+            <span>TECHNOLOGY STACK</span>
+            <h2>Built With Modern DevOps Tools</h2>
+        </div>
+
+        <div class="tech-grid">
+
+            <div class="tech-card">
+                <div class="tech-icon">◈</div>
+                <h3>GitHub</h3>
+                <p>Version control and source code management.</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">⚡</div>
+                <h3>GitHub Actions</h3>
+                <p>Automated CI/CD workflow execution.</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">▣</div>
+                <h3>Docker</h3>
+                <p>Application containerization and packaging.</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">◉</div>
+                <h3>Docker Hub</h3>
+                <p>Container image storage and distribution.</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">☁</div>
+                <h3>Google Cloud</h3>
+                <p>Cloud infrastructure and application hosting.</p>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-icon">◇</div>
+                <h3>Terraform</h3>
+                <p>Infrastructure as Code for cloud resources.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Features -->
+    <section class="section">
+
+        <div class="section-title">
+            <span>PROJECT FEATURES</span>
+            <h2>Complete DevOps Automation</h2>
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature">
+                <span>✓</span>
+                <div>
+                    <h3>Automated Build</h3>
+                    <p>Every GitHub push automatically builds the application.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <span>✓</span>
+                <div>
+                    <h3>Automated Testing</h3>
+                    <p>Application tests run automatically before deployment.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <span>✓</span>
+                <div>
+                    <h3>Containerized Deployment</h3>
+                    <p>Docker images are created and published automatically.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <span>✓</span>
+                <div>
+                    <h3>Cloud Deployment</h3>
+                    <p>The latest image is automatically deployed to GCP.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="footer-logo">
+            DevOps<span>Hub</span>
+        </div>
+
+        <p>
+            Automated Web Application Deployment with CI/CD
+        </p>
+
+        <p class="copyright">
+            DevOps Internship Project © 2026
+        </p>
+
+    </footer>
 
 </body>
 
