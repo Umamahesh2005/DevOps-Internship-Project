@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install dependencies
         working-directory: ./app
@@ -34,7 +34,7 @@ jobs:
         run: npm test --if-present
 
       - name: Build Docker image
-        run: docker build -t devops-webapp:ci .
+        run: docker build --no-cache -t devops-webapp:ci .
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -55,10 +55,13 @@ jobs:
         run: |
           gcloud compute ssh devops-web-server \
             --zone=us-central1-a \
-            --command="mkdir -p /home/lumamahesh128/app-deploy"
+            --command="
+              rm -rf /home/lumamahesh128/app-deploy &&
+              mkdir -p /home/lumamahesh128/app-deploy
+            "
 
           gcloud compute scp --recurse ./app \
-            devops-web-server:/home/lumamahesh128/app-deploy \
+            devops-web-server:/home/lumamahesh128/app-deploy/app \
             --zone=us-central1-a
 
           gcloud compute scp Dockerfile \
@@ -75,9 +78,16 @@ jobs:
               cd /home/lumamahesh128/app-deploy &&
               sudo docker stop devops-webapp-container || true &&
               sudo docker rm devops-webapp-container || true &&
-              sudo docker build -t devops-webapp:latest . &&
+              sudo docker rmi devops-webapp:latest || true &&
+              sudo docker build --no-cache -t devops-webapp:latest . &&
               sudo docker run -d \
                 --name devops-webapp-container \
                 -p 3000:3000 \
                 devops-webapp:latest
             "
+
+      - name: Verify deployed application
+        run: |
+          gcloud compute ssh devops-web-server \
+            --zone=us-central1-a \
+            --command="curl -I http://localhost:3000"
