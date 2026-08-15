@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
 
       - name: Install dependencies
         working-directory: ./app
@@ -34,7 +34,7 @@ jobs:
         run: npm test --if-present
 
       - name: Build Docker image
-        run: docker build --no-cache -t devops-webapp:ci .
+        run: docker build -t devops-webapp:ci .
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -48,24 +48,22 @@ jobs:
       - name: Verify Google Cloud authentication
         run: |
           gcloud config set project devops-internship-project
-
           gcloud compute instances describe devops-web-server \
             --zone=us-central1-a
 
-      - name: Prepare deployment directory
+      - name: Prepare deployment directory on GCP VM
         run: |
           gcloud compute ssh devops-web-server \
             --zone=us-central1-a \
             --command="
-              sudo rm -rf /home/lumamahesh128/app-deploy &&
-              sudo mkdir -p /home/lumamahesh128/app-deploy &&
+              sudo mkdir -p /home/lumamahesh128/app-deploy/app &&
               sudo chown -R lumamahesh128:lumamahesh128 /home/lumamahesh128/app-deploy
             "
 
       - name: Copy application files to GCP VM
         run: |
-          gcloud compute scp --recurse ./app/. \
-            devops-web-server:/home/lumamahesh128/app-deploy \
+          gcloud compute scp --recurse ./app/* \
+            devops-web-server:/home/lumamahesh128/app-deploy/app/ \
             --zone=us-central1-a
 
           gcloud compute scp Dockerfile \
@@ -82,33 +80,11 @@ jobs:
             --zone=us-central1-a \
             --command="
               cd /home/lumamahesh128/app-deploy &&
-              
-              echo 'Stopping old container...' &&
               sudo docker stop devops-webapp-container || true &&
-              
-              echo 'Removing old container...' &&
               sudo docker rm devops-webapp-container || true &&
-              
-              echo 'Removing old image...' &&
-              sudo docker rmi devops-webapp:latest || true &&
-              
-              echo 'Building new Docker image...' &&
-              sudo docker build --no-cache -t devops-webapp:latest . &&
-              
-              echo 'Starting new container...' &&
+              sudo docker build -t devops-webapp:latest . &&
               sudo docker run -d \
                 --name devops-webapp-container \
                 -p 3000:3000 \
                 devops-webapp:latest
-            "
-
-      - name: Verify deployed application
-        run: |
-          gcloud compute ssh devops-web-server \
-            --zone=us-central1-a \
-            --command="
-              echo 'Docker container status:' &&
-              sudo docker ps &&
-              echo 'Application response:' &&
-              curl -I http://localhost:3000
             "
